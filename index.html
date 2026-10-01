@@ -137,9 +137,11 @@ summary{cursor:pointer;font-weight:700;font-size:14px;color:var(--accent)}
 .wq{border-top:2px dotted var(--line);padding-top:12px;font-size:14px}
 .wq .ans{display:flex;flex-direction:column;gap:2px;margin:6px 0}
 .wq .ans span b{font-family:var(--font-num)}
-.bars{display:flex;flex-direction:column;gap:9px}
-.bar{display:grid;grid-template-columns:minmax(0,9.5em) 1fr 3.4em;gap:10px;align-items:center;font-size:13px}
-.bar .track{height:10px;background:var(--bg2);border-radius:5px;overflow:hidden}
+.ph{display:inline-block}
+.bars{display:flex;flex-direction:column;gap:12px}
+.bar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;align-items:baseline;font-size:13px}
+.bar .name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.bar .track{grid-column:1 / -1;height:10px;background:var(--bg2);border-radius:5px;overflow:hidden}
 .bar .fill{height:100%;background:linear-gradient(90deg,var(--lilac),var(--accent));border-radius:5px}
 .bar .pct{font-family:var(--font-num);font-weight:700;text-align:right;color:var(--muted)}
 .garden{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
@@ -157,8 +159,8 @@ input[type=time],input[type=date]{font:inherit;font-size:16px;padding:8px 12px;b
 .empty{text-align:center;padding:28px 12px;color:var(--muted)}
 .empty svg{display:block;margin:0 auto 8px}
 #confetti{position:fixed;inset:0;pointer-events:none;z-index:20;width:100%;height:100%}
-@media (max-width:420px){.kpi b{font-size:22px}.bar{grid-template-columns:minmax(0,7em) 1fr 3em}.stamp{width:88px;height:88px;font-size:13px}.score b{font-size:44px}}
-@media (max-width:360px){.greet{padding:10px 12px;gap:8px}.greet .msg{font-size:11px}.greet .msg b{font-size:12px}.meta div{min-width:44px;padding:4px 5px}.meta b{font-size:15px}.verdict strong.v{font-size:13px}}
+@media (max-width:420px){.kpi b{font-size:22px}.stamp{width:88px;height:88px;font-size:13px}.score b{font-size:44px}}
+@media (max-width:360px){.bar{font-size:12px}.greet{padding:10px 12px;gap:8px}.greet .msg{font-size:11px}.greet .msg b{font-size:12px}.meta div{min-width:44px;padding:4px 5px}.meta b{font-size:15px}.verdict strong.v{font-size:13px}}
 @media (prefers-reduced-motion:no-preference){
   .fade{animation:fade .3s ease-out}@keyframes fade{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}
   .pop{animation:pop .45s cubic-bezier(.3,1.6,.5,1)}@keyframes pop{from{transform:scale(.6) rotate(-12deg);opacity:0}to{transform:scale(1) rotate(-12deg);opacity:1}}
@@ -444,7 +446,7 @@ function viewStats(){
   const ps=S.st.progress;let c=0,w=0;Object.values(ps).forEach(p=>{c+=p.c;w+=p.w;});
   const acc=c+w?Math.round(c/(c+w)*100):0;
   const bySubj=Object.keys(SUBJ).map(k=>{let sc=0,sw=0;allQ().filter(q=>q.subj===k).forEach(q=>{const p=ps[q.id];if(p){sc+=p.c;sw+=p.w;}});return {k,sc,sw,n:sc+sw,r:sc+sw?sc/(sc+sw):null};});
-  const bars=bySubj.map(b=>`<div class="bar"><span>${esc(SUBJ[b.k].name)}</span><div class="track"><div class="fill" style="width:${b.r==null?0:Math.round(b.r*100)}%"></div></div><span class="pct">${b.r==null?"—":Math.round(b.r*100)+"%"}</span></div>`).join("");
+  const bars=bySubj.map(b=>`<div class="bar"><span class="name">${esc(SUBJ[b.k].name)}</span><span class="pct">${b.r==null?"—":Math.round(b.r*100)+"%"}</span><div class="track"><div class="fill" style="width:${b.r==null?0:Math.round(b.r*100)}%"></div></div></div>`).join("");
   const days=[];let bloomed=0;for(let i=13;i>=0;i--){const d=addDays(TODAY,-i);const rec=S.st.days[d];const st=dayDone(rec)?"bloom":(rec&&rec.rounds.length&&Object.keys(rec.rounds[0].ans).length?"bud":"seed");if(st==="bloom")bloomed++;const [,mm,dd]=d.split("-").map(Number);days.push(`<div class="plot">${flowerSVG(40,st,`${mm}月${dd}日：${st==="bloom"?"完了":st==="bud"?"途中":"未実施"}`)}<span>${mm}/${dd}</span></div>`);}
   return `<div class="stack fade">
     <h2 class="sec">記録</h2>
@@ -456,7 +458,7 @@ function viewStats(){
     <div class="card stack"><div class="row" style="justify-content:space-between"><h3>わたしの花だん</h3><span class="chip pink">2週間で${bloomed}輪</span></div><div class="garden">${days.join("")}</div>
       <div class="small muted">今日の5問を解き終えるとお花が咲きます。途中まではつぼみ。14輪咲かせるのが目標です。</div></div>
     <div class="card stack"><h3>科目別の正答率</h3><div class="bars">${bars}</div>
-      <div class="small muted">本試験は科目群ごとに得点が必要です。0%や低い科目を重点的に復習しましょう。</div></div>
+      <div class="small muted"><span class="ph">本試験では、</span><span class="ph">すべての科目群で</span><span class="ph">得点が必要です。</span><span class="ph">正答率の低い科目を</span><span class="ph">重点的に復習しましょう。</span></div></div>
   </div>`;
 }
 
