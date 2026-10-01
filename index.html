@@ -44,7 +44,9 @@
   --ok:#7DD6BE; --ok-bg:#1F3A33; --ng:#FF8FA3; --ng-bg:#472631;
   --shadow:0 6px 18px rgba(0,0,0,.25); color-scheme:dark;
 }
-*{box-sizing:border-box}[hidden]{display:none!important}
+*{box-sizing:border-box}
+button{-webkit-appearance:none;appearance:none}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}[hidden]{display:none!important}
 body{margin:0;background:var(--bg);background-image:radial-gradient(var(--bg2) 1.2px,transparent 1.3px);background-size:22px 22px;color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.8;-webkit-font-smoothing:antialiased}
 .wrap{max-width:680px;margin:0 auto;padding-inline:16px;padding-block:calc(18px + env(safe-area-inset-top,0px)) 110px}
 header.top{display:flex;flex-direction:column;gap:12px;margin-bottom:18px}
@@ -52,10 +54,11 @@ header.top{display:flex;flex-direction:column;gap:12px;margin-bottom:18px}
 .brand svg{flex:none}
 .brand h1{font-family:var(--font-display);font-weight:500;font-size:21px;line-height:1.3;margin:0;letter-spacing:.03em}
 .brand p{margin:0;color:var(--muted);font-size:13px}
-.greet{background:var(--surface);border-radius:20px;padding:14px 16px;box-shadow:var(--shadow);display:flex;gap:12px;align-items:center}
-.greet .msg{flex:1;min-width:0;font-size:14px}
+.greet{background:var(--surface);border-radius:20px;padding:14px 16px;box-shadow:var(--shadow);display:flex;flex-wrap:wrap;gap:10px 12px;align-items:center}
+.greet>svg{flex:none}
+.greet .msg{flex:1 1 200px;min-width:0;font-size:14px;line-height:1.7}
 .greet .msg b{display:block;font-size:15px;color:var(--accent)}
-.meta{display:flex;gap:8px}
+.meta{display:flex;gap:8px;margin-left:auto}
 .meta div{background:var(--accent-soft);border-radius:14px;padding:6px 10px;text-align:center;font-size:11px;color:var(--muted);min-width:64px;line-height:1.4}
 .meta div:nth-child(2){background:var(--lilac-soft)}
 .meta b{display:block;font-family:var(--font-num);font-size:20px;color:var(--ink);font-weight:700;line-height:1.2}
@@ -85,6 +88,7 @@ h3{font-size:16px;margin:0;font-weight:700}
 .pips{display:flex;gap:5px}
 .pip{width:18px;height:18px;color:var(--line);display:inline-block}.pip svg{width:100%;height:100%;display:block}
 .pip.ok{color:var(--ok)}.pip.ng{color:var(--ng)}.pip.cur{color:var(--accent)}
+.pip.cur svg path{fill:none;stroke:currentColor;stroke-width:2.4}
 .qhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 .qno{font-family:var(--font-num);font-weight:700;font-size:13px;color:var(--muted)}
 .qno b{color:var(--accent);font-size:18px}
@@ -99,7 +103,7 @@ h3{font-size:16px;margin:0;font-weight:700}
 .choice.right .n{background:var(--ok);color:var(--surface)}
 .choice.wrong{border-color:var(--ng);background:var(--ng-bg)}
 .choice.wrong .n{background:var(--ng);color:var(--surface)}
-.choice:disabled{cursor:default}
+.choice:disabled{cursor:default;opacity:1;color:var(--ink);-webkit-text-fill-color:var(--ink)}
 .hint{background:var(--marker);color:var(--marker-ink);border-radius:16px;padding:12px 14px;font-size:14px;display:flex;gap:10px;align-items:flex-start}
 .hint svg{flex:none;margin-top:2px}
 .verdict{border-radius:18px;padding:16px;font-size:14px;position:relative}
@@ -146,7 +150,7 @@ input[type=time],input[type=date]{font:inherit;font-size:16px;padding:8px 12px;b
 .empty{text-align:center;padding:28px 12px;color:var(--muted)}
 .empty svg{display:block;margin:0 auto 8px}
 #confetti{position:fixed;inset:0;pointer-events:none;z-index:20;width:100%;height:100%}
-@media (max-width:420px){.kpi b{font-size:22px}.bar{grid-template-columns:minmax(0,7em) 1fr 3em}.stamp{width:88px;height:88px;font-size:13px}.score b{font-size:44px}}
+@media (max-width:420px){.meta{width:100%;margin-left:0}.meta div{flex:1;display:flex;align-items:baseline;justify-content:center;gap:6px}.meta b{display:inline;font-size:18px}.kpi b{font-size:22px}.bar{grid-template-columns:minmax(0,7em) 1fr 3em}.stamp{width:88px;height:88px;font-size:13px}.score b{font-size:44px}}
 @media (prefers-reduced-motion:no-preference){
   .fade{animation:fade .3s ease-out}@keyframes fade{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}
   .pop{animation:pop .45s cubic-bezier(.3,1.6,.5,1)}@keyframes pop{from{transform:scale(.6) rotate(-12deg);opacity:0}to{transform:scale(1) rotate(-12deg);opacity:1}}
