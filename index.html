@@ -54,14 +54,21 @@ header.top{display:flex;flex-direction:column;gap:12px;margin-bottom:18px}
 .brand svg{flex:none}
 .brand h1{font-family:var(--font-display);font-weight:500;font-size:21px;line-height:1.3;margin:0;letter-spacing:.03em}
 .brand p{margin:0;color:var(--muted);font-size:13px}
-.greet{background:var(--surface);border-radius:20px;padding:14px 16px;box-shadow:var(--shadow);display:flex;flex-wrap:wrap;gap:10px 12px;align-items:center}
+.countdown{display:flex;align-items:center;gap:12px;border-radius:20px;padding:12px 18px;background:linear-gradient(115deg,var(--accent),var(--lilac));color:var(--accent-ink);box-shadow:var(--shadow)}
+.countdown .lbl{display:flex;flex-direction:column;font-size:13px;font-weight:700;line-height:1.35}
+.countdown .lbl small{font-size:11px;font-weight:500;opacity:.9}
+.countdown .num{margin-left:auto;display:flex;align-items:baseline;gap:4px;font-weight:700;font-size:15px;white-space:nowrap}
+.countdown .num b{font-family:var(--font-num);font-size:44px;line-height:1;letter-spacing:-.01em}
+.countdown.today{justify-content:center;font-size:15px;font-weight:700}
+.countdown.set{width:100%;font:inherit;font-size:13px;font-weight:700;border:2px dashed var(--accent);background:var(--surface);color:var(--accent);box-shadow:none;justify-content:center;cursor:pointer}
+.greet{background:var(--surface);border-radius:20px;padding:12px 14px;box-shadow:var(--shadow);display:flex;gap:10px;align-items:center}
 .greet>svg{flex:none}
-.greet .msg{flex:1 1 200px;min-width:0;font-size:14px;line-height:1.7}
-.greet .msg b{display:block;font-size:15px;color:var(--accent)}
-.meta{display:flex;gap:8px;margin-left:auto}
-.meta div{background:var(--accent-soft);border-radius:14px;padding:6px 10px;text-align:center;font-size:11px;color:var(--muted);min-width:64px;line-height:1.4}
+.greet .msg{flex:1;min-width:0;font-size:12px;line-height:1.6;text-wrap:balance}
+.greet .msg b{display:block;font-size:13px;color:var(--accent)}
+.meta{display:flex;gap:6px;flex:none}
+.meta div{background:var(--accent-soft);border-radius:12px;padding:5px 6px;text-align:center;font-size:10px;color:var(--muted);min-width:52px;line-height:1.3}
 .meta div:nth-child(2){background:var(--lilac-soft)}
-.meta b{display:block;font-family:var(--font-num);font-size:20px;color:var(--ink);font-weight:700;line-height:1.2}
+.meta b{display:block;font-family:var(--font-num);font-size:17px;color:var(--ink);font-weight:700;line-height:1.2}
 .sync{font-size:12px;color:var(--ng)}
 nav.tabs{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;padding:0 12px calc(10px + env(safe-area-inset-bottom,0px));z-index:5;pointer-events:none}
 nav.tabs .in{display:grid;grid-template-columns:repeat(4,1fr);max-width:520px;width:100%;background:var(--surface);border-radius:24px;box-shadow:0 8px 24px rgba(120,60,80,.16);padding:6px;pointer-events:auto}
@@ -108,7 +115,7 @@ h3{font-size:16px;margin:0;font-weight:700}
 .hint svg{flex:none;margin-top:2px}
 .verdict{border-radius:18px;padding:16px;font-size:14px;position:relative}
 .verdict.ok{background:var(--ok-bg)}.verdict.ng{background:var(--ng-bg)}
-.verdict strong.v{display:block;font-size:17px;margin-bottom:4px}
+.verdict strong.v{display:block;font-size:14px;margin-bottom:2px}
 .verdict.ok strong.v{color:var(--ok)}.verdict.ng strong.v{color:var(--ng)}
 .score{display:flex;align-items:baseline;gap:6px;font-family:var(--font-num);font-weight:700}
 .score b{font-size:52px;line-height:1;color:var(--accent)}
@@ -150,7 +157,8 @@ input[type=time],input[type=date]{font:inherit;font-size:16px;padding:8px 12px;b
 .empty{text-align:center;padding:28px 12px;color:var(--muted)}
 .empty svg{display:block;margin:0 auto 8px}
 #confetti{position:fixed;inset:0;pointer-events:none;z-index:20;width:100%;height:100%}
-@media (max-width:420px){.meta{width:100%;margin-left:0}.meta div{flex:1;display:flex;align-items:baseline;justify-content:center;gap:6px}.meta b{display:inline;font-size:18px}.kpi b{font-size:22px}.bar{grid-template-columns:minmax(0,7em) 1fr 3em}.stamp{width:88px;height:88px;font-size:13px}.score b{font-size:44px}}
+@media (max-width:420px){.kpi b{font-size:22px}.bar{grid-template-columns:minmax(0,7em) 1fr 3em}.stamp{width:88px;height:88px;font-size:13px}.score b{font-size:44px}}
+@media (max-width:360px){.greet{padding:10px 12px;gap:8px}.greet .msg{font-size:11px}.greet .msg b{font-size:12px}.meta div{min-width:44px;padding:4px 5px}.meta b{font-size:15px}.verdict strong.v{font-size:13px}}
 @media (prefers-reduced-motion:no-preference){
   .fade{animation:fade .3s ease-out}@keyframes fade{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}
   .pop{animation:pop .45s cubic-bezier(.3,1.6,.5,1)}@keyframes pop{from{transform:scale(.6) rotate(-12deg);opacity:0}to{transform:scale(1) rotate(-12deg);opacity:1}}
@@ -166,6 +174,7 @@ input[type=time],input[type=date]{font:inherit;font-size:16px;padding:8px 12px;b
       <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="var(--accent-soft)"/><g fill="var(--accent)"><circle cx="20" cy="13" r="5"/><circle cx="27" cy="18" r="5"/><circle cx="24.5" cy="26" r="5"/><circle cx="15.5" cy="26" r="5"/><circle cx="13" cy="18" r="5"/></g><circle cx="20" cy="20" r="4" fill="var(--sun)"/></svg>
       <div><h1>介護福祉士 毎日5問</h1><p id="today-label"></p></div>
     </div>
+    <div id="countdown"></div>
     <div class="greet" id="greet"></div>
   </header>
   <main id="main"></main>
@@ -263,24 +272,34 @@ function renderMeta(){
   const wd="日月火水木金土"[new Date(y,m-1,dd).getDay()];
   let label=`${m}月${dd}日（${wd}）`;
   const ex=S.st.settings.examDate;
-  if(ex&&ex>=TODAY){const days=Math.round((new Date(ex)-new Date(TODAY))/864e5);label+=` ・ 試験まであと${days}日`;}
   $("#today-label").textContent=label;
+  renderCountdown(ex);
   const tot=Object.values(S.st.progress).reduce((a,p)=>a+p.c+p.w,0);
   const sk=streak(), done=dayDone(S.st.days[TODAY]);
   const h=new Date().getHours();
-  const hello=h<11?"おはようございます":h<17?"こんにちは":"今日もおつかれさまです";
+  const hello=h<11?"おはようございます":h<17?"こんにちは":"今日もおつかれさま";
   let line;
-  if(done) line=pickMsg(["今日の5問はクリア！ えらい！","今日の分はおしまい。ゆっくり休んでね","コツコツ続けている自分をほめてあげてね"]);
-  else if(sk>=7) line=`${sk}日連続！ 花だんがにぎやかになってきました`;
-  else if(sk>=1) line=`${sk}日連続で続いています。今日もお花を咲かせよう`;
-  else if(tot===0) line="まずは今日の5問から。1日5分で合格に近づこう";
-  else line="5問だけなら、すぐ終わります。今日も一緒にがんばろう";
-  $("#greet").innerHTML=`${flowerSVG(44,done?"bloom":"bud")}<div class="msg"><b>${hello}</b>${esc(line)}${syncNote?`<div class="sync">${esc(syncNote)}</div>`:""}</div>
+  if(done) line=pickMsg(["今日の5問クリア！ えらい！","今日はおしまい。ゆっくり休んでね","続けている自分をほめてあげてね"]);
+  else if(sk>=7) line=`${sk}日連続！ 花だんがにぎやかです`;
+  else if(sk>=1) line=`${sk}日連続！ 今日もお花を咲かせよう`;
+  else if(tot===0) line="まずは今日の5問から。1日5分でOK";
+  else line="5問だけ、さくっと解こう";
+  $("#greet").innerHTML=`${flowerSVG(34,done?"bloom":"bud")}<div class="msg"><b>${hello}</b>${esc(line)}${syncNote?`<div class="sync">${esc(syncNote)}</div>`:""}</div>
     <div class="meta"><div><b>${sk}</b>連続日数</div><div><b>${tot}</b>解いた数</div></div>`;
+}
+function renderCountdown(ex){
+  const el=$("#countdown");
+  if(!ex||ex<TODAY){el.innerHTML=`<button class="countdown set" data-tab="settings">試験日を設定して残り日数を表示</button>`;return;}
+  const [y,m,d]=ex.split("-").map(Number);
+  const days=Math.round((new Date(y,m-1,d)-new Date(...TODAY.split("-").map((v,i)=>i===1?v-1:+v)))/864e5);
+  if(days===0){el.innerHTML=`<div class="countdown today">今日は試験日！ いってらっしゃい</div>`;return;}
+  const wd="日月火水木金土"[new Date(y,m-1,d).getDay()];
+  const sub=days<=7?"ラストスパート！":days<=30?"あと少し、毎日コツコツ":`${y}年${m}月${d}日（${wd}）`;
+  el.innerHTML=`<div class="countdown" role="status" aria-label="試験まであと${days}日"><span class="lbl">試験まで<small>${esc(sub)}</small></span><span class="num">あと<b>${days}</b>日</span></div>`;
 }
 function pickMsg(arr){return arr[hashStr(TODAY+arr[0])%arr.length];}
 const PRAISE=["正解！ すごい！","正解！ その調子！","正解！ よく覚えてたね","正解！ ばっちりです","正解！ 合格に一歩前進"];
-const ENCOURAGE=["おしい！ ここで覚えればもう大丈夫","まちがえた問題こそ伸びしろです","大丈夫、復習ノートでしっかり覚えよう","ここで間違えておけば本番で取れます"];
+const ENCOURAGE=["おしい！ ここで覚えれば大丈夫","まちがえた問題こそ伸びしろ！","復習ノートでしっかり覚えよう","ここで覚えれば本番で取れます"];
 // 花のアイコン：bloom＝完了、bud＝つぼみ、seed＝まだ
 function flowerSVG(size,state,label){
   const t=label?` role="img" aria-label="${esc(label)}"`:' aria-hidden="true"';
