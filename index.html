@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#FFF6F7">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="毎日5問">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>介護福祉士 毎日5問</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&family=Kiwi+Maru:wght@500&family=Quicksand:wght@600;700&display=swap">
+<style>
+/* Layout: a soft study diary — one rounded column, flower stamps for progress, tabs pinned to the bottom. */
+:root{
+  --bg:#FFF6F7; --bg2:#FDEBEF; --surface:#FFFFFF; --ink:#4A3A42; --muted:#8C7780; --line:#F3DCE2;
+  --accent:#E5678C; --accent-ink:#FFFFFF; --accent-soft:#FDE4EB;
+  --mint:#4FB39B; --mint-soft:#E1F5EF; --lilac:#A890DC; --lilac-soft:#EFE9FB;
+  --marker:#FFF1B8; --marker-ink:#5A4A2A; --sun:#F6B83F;
+  --ok:#3FA287; --ok-bg:#E3F5EF; --ng:#E0607A; --ng-bg:#FDE8EC;
+  --shadow:0 6px 18px rgba(229,103,140,.10);
+  --font-display:"Kiwi Maru","Zen Maru Gothic","Hiragino Maru Gothic ProN",serif;
+  --font-body:"Zen Maru Gothic","Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",system-ui,sans-serif;
+  --font-num:"Quicksand","Zen Maru Gothic",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#21181D; --bg2:#2A1E25; --surface:#2C2128; --ink:#F6E8EE; --muted:#C3A9B5; --line:#45333D;
+  --accent:#FF8FB0; --accent-ink:#2A1720; --accent-soft:#4A2D3A;
+  --mint:#7DD6BE; --mint-soft:#1F3A33; --lilac:#C6B3F2; --lilac-soft:#352D4A;
+  --marker:#5A4B22; --marker-ink:#FFF3C4; --sun:#F7C766;
+  --ok:#7DD6BE; --ok-bg:#1F3A33; --ng:#FF8FA3; --ng-bg:#472631;
+  --shadow:0 6px 18px rgba(0,0,0,.25); color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#21181D; --bg2:#2A1E25; --surface:#2C2128; --ink:#F6E8EE; --muted:#C3A9B5; --line:#45333D;
+  --accent:#FF8FB0; --accent-ink:#2A1720; --accent-soft:#4A2D3A;
+  --mint:#7DD6BE; --mint-soft:#1F3A33; --lilac:#C6B3F2; --lilac-soft:#352D4A;
+  --marker:#5A4B22; --marker-ink:#FFF3C4; --sun:#F7C766;
+  --ok:#7DD6BE; --ok-bg:#1F3A33; --ng:#FF8FA3; --ng-bg:#472631;
+  --shadow:0 6px 18px rgba(0,0,0,.25); color-scheme:dark;
+}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:var(--bg);background-image:radial-gradient(var(--bg2) 1.2px,transparent 1.3px);background-size:22px 22px;color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.8;-webkit-font-smoothing:antialiased}
+.wrap{max-width:680px;margin:0 auto;padding-inline:16px;padding-block:calc(18px + env(safe-area-inset-top,0px)) 110px}
+header.top{display:flex;flex-direction:column;gap:12px;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand svg{flex:none}
+.brand h1{font-family:var(--font-display);font-weight:500;font-size:21px;line-height:1.3;margin:0;letter-spacing:.03em}
+.brand p{margin:0;color:var(--muted);font-size:13px}
+.greet{background:var(--surface);border-radius:20px;padding:14px 16px;box-shadow:var(--shadow);display:flex;gap:12px;align-items:center}
+.greet .msg{flex:1;min-width:0;font-size:14px}
+.greet .msg b{display:block;font-size:15px;color:var(--accent)}
+.meta{display:flex;gap:8px}
+.meta div{background:var(--accent-soft);border-radius:14px;padding:6px 10px;text-align:center;font-size:11px;color:var(--muted);min-width:64px;line-height:1.4}
+.meta div:nth-child(2){background:var(--lilac-soft)}
+.meta b{display:block;font-family:var(--font-num);font-size:20px;color:var(--ink);font-weight:700;line-height:1.2}
+.sync{font-size:12px;color:var(--ng)}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;padding:0 12px calc(10px + env(safe-area-inset-bottom,0px));z-index:5;pointer-events:none}
+nav.tabs .in{display:grid;grid-template-columns:repeat(4,1fr);max-width:520px;width:100%;background:var(--surface);border-radius:24px;box-shadow:0 8px 24px rgba(120,60,80,.16);padding:6px;pointer-events:auto}
+nav.tabs button{background:none;border:0;border-radius:18px;padding:6px 2px 5px;font:inherit;font-size:11px;font-weight:700;color:var(--muted);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;position:relative}
+nav.tabs button svg{width:22px;height:22px}
+nav.tabs button[aria-current="page"]{color:var(--accent);background:var(--accent-soft)}
+nav.tabs .badge{position:absolute;top:2px;right:18%;min-width:18px;padding:0 5px;border-radius:9px;background:var(--accent);color:var(--accent-ink);font-size:10px;line-height:18px;font-family:var(--font-num)}
+h2.sec{font-family:var(--font-display);font-weight:500;font-size:20px;margin:0;text-wrap:balance;display:flex;align-items:center;gap:8px}
+h3{font-size:16px;margin:0;font-weight:700}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.card{background:var(--surface);border-radius:22px;padding:20px;box-shadow:var(--shadow)}
+.stack{display:flex;flex-direction:column;gap:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{font:inherit;font-size:15px;font-weight:700;border-radius:999px;padding:11px 22px;border:2px solid var(--accent);background:var(--accent);color:var(--accent-ink);cursor:pointer;box-shadow:0 4px 0 rgba(180,60,95,.25);transition:transform .1s}
+.btn:active{transform:translateY(2px);box-shadow:0 2px 0 rgba(180,60,95,.25)}
+.btn.ghost{background:var(--surface);color:var(--accent);box-shadow:none}
+.btn.quiet{background:var(--surface);border-color:var(--line);color:var(--ink);font-weight:500;box-shadow:none}
+.btn:disabled{opacity:.45;cursor:default;transform:none}
+.btn:focus-visible,nav.tabs button:focus-visible,.choice:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--lilac);outline-offset:2px}
+.chip{display:inline-block;font-size:12px;padding:2px 12px;border-radius:999px;background:var(--lilac-soft);color:var(--ink);font-weight:700}
+.chip.ai{background:var(--marker);color:var(--marker-ink)}
+.chip.pink{background:var(--accent-soft);color:var(--accent)}
+.pips{display:flex;gap:5px}
+.pip{width:18px;height:18px;color:var(--line);display:inline-block}.pip svg{width:100%;height:100%;display:block}
+.pip.ok{color:var(--ok)}.pip.ng{color:var(--ng)}.pip.cur{color:var(--accent)}
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.qno{font-family:var(--font-num);font-weight:700;font-size:13px;color:var(--muted)}
+.qno b{color:var(--accent);font-size:18px}
+.stem{font-size:16px;line-height:1.9;margin:2px 0 6px}
+.choices{display:flex;flex-direction:column;gap:9px}
+.choice{display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start;text-align:left;font:inherit;font-size:15px;color:var(--ink);background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:11px 14px;cursor:pointer;transition:border-color .15s,background .15s}
+.choice:hover:not(:disabled){border-color:var(--accent)}
+.choice .n{font-family:var(--font-num);font-weight:700;width:28px;height:28px;border-radius:50%;background:var(--bg2);display:grid;place-items:center;font-size:14px;color:var(--muted);margin-top:0}
+.choice[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.choice[aria-pressed="true"] .n{background:var(--accent);color:var(--accent-ink)}
+.choice.right{border-color:var(--ok);background:var(--ok-bg)}
+.choice.right .n{background:var(--ok);color:var(--surface)}
+.choice.wrong{border-color:var(--ng);background:var(--ng-bg)}
+.choice.wrong .n{background:var(--ng);color:var(--surface)}
+.choice:disabled{cursor:default}
+.hint{background:var(--marker);color:var(--marker-ink);border-radius:16px;padding:12px 14px;font-size:14px;display:flex;gap:10px;align-items:flex-start}
+.hint svg{flex:none;margin-top:2px}
+.verdict{border-radius:18px;padding:16px;font-size:14px;position:relative}
+.verdict.ok{background:var(--ok-bg)}.verdict.ng{background:var(--ng-bg)}
+.verdict strong.v{display:block;font-size:17px;margin-bottom:4px}
+.verdict.ok strong.v{color:var(--ok)}.verdict.ng strong.v{color:var(--ng)}
+.score{display:flex;align-items:baseline;gap:6px;font-family:var(--font-num);font-weight:700}
+.score b{font-size:52px;line-height:1;color:var(--accent)}
+.result-top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.stamp{width:104px;height:104px;border-radius:50%;border:3px solid var(--accent);color:var(--accent);display:grid;place-items:center;text-align:center;font-family:var(--font-display);font-size:15px;line-height:1.3;transform:rotate(-12deg);position:relative;flex:none}
+.stamp::after{content:"";position:absolute;inset:5px;border-radius:50%;border:1.5px dashed var(--accent)}
+.stamp.mint{border-color:var(--mint);color:var(--mint)}.stamp.mint::after{border-color:var(--mint)}
+.stamp.lilac{border-color:var(--lilac);color:var(--lilac)}.stamp.lilac::after{border-color:var(--lilac)}
+.reslist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.reslist li{display:grid;grid-template-columns:24px 1fr;gap:10px;padding:12px 0;border-top:2px dotted var(--line)}
+.mark{font-weight:700;font-size:17px}.mark.ok{color:var(--ok)}.mark.ng{color:var(--ng)}
+details{border-top:2px dotted var(--line);padding-top:10px}
+summary{cursor:pointer;font-weight:700;font-size:14px;color:var(--accent)}
+.notes ul{margin:8px 0 0;padding-left:1.2em}
+.notes li{margin:5px 0}
+.notes li::marker{color:var(--accent)}
+.subjsec{display:flex;flex-direction:column;gap:12px}
+.subjsec .head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.wq{border-top:2px dotted var(--line);padding-top:12px;font-size:14px}
+.wq .ans{display:flex;flex-direction:column;gap:2px;margin:6px 0}
+.wq .ans span b{font-family:var(--font-num)}
+.bars{display:flex;flex-direction:column;gap:9px}
+.bar{display:grid;grid-template-columns:minmax(0,9.5em) 1fr 3.4em;gap:10px;align-items:center;font-size:13px}
+.bar .track{height:10px;background:var(--bg2);border-radius:5px;overflow:hidden}
+.bar .fill{height:100%;background:linear-gradient(90deg,var(--lilac),var(--accent));border-radius:5px}
+.bar .pct{font-family:var(--font-num);font-weight:700;text-align:right;color:var(--muted)}
+.garden{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.plot{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;color:var(--muted);font-family:var(--font-num)}
+.plot svg{width:100%;max-width:40px;height:auto}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.kpi{background:var(--surface);border-radius:18px;padding:12px;box-shadow:var(--shadow);text-align:center}
+.kpi:nth-child(1){background:var(--accent-soft)}.kpi:nth-child(2){background:var(--lilac-soft)}.kpi:nth-child(3){background:var(--mint-soft)}
+.kpi b{display:block;font-family:var(--font-num);font-size:26px;font-weight:700;line-height:1.2}
+.kpi span{font-size:12px;color:var(--muted)}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted)}
+input[type=time],input[type=date]{font:inherit;font-size:16px;padding:8px 12px;border:2px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink)}
+.status{font-size:13px;padding:10px 12px;border-radius:14px;background:var(--mint-soft)}
+.status.err{background:var(--ng-bg);color:var(--ng)}
+.empty{text-align:center;padding:28px 12px;color:var(--muted)}
+.empty svg{display:block;margin:0 auto 8px}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:20;width:100%;height:100%}
+@media (max-width:420px){.kpi b{font-size:22px}.bar{grid-template-columns:minmax(0,7em) 1fr 3em}.stamp{width:88px;height:88px;font-size:13px}.score b{font-size:44px}}
+@media (prefers-reduced-motion:no-preference){
+  .fade{animation:fade .3s ease-out}@keyframes fade{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .pop{animation:pop .45s cubic-bezier(.3,1.6,.5,1)}@keyframes pop{from{transform:scale(.6) rotate(-12deg);opacity:0}to{transform:scale(1) rotate(-12deg);opacity:1}}
+  .bounce{animation:bounce .5s cubic-bezier(.3,1.6,.5,1)}@keyframes bounce{from{transform:scale(.9)}to{transform:scale(1)}}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="var(--accent-soft)"/><g fill="var(--accent)"><circle cx="20" cy="13" r="5"/><circle cx="27" cy="18" r="5"/><circle cx="24.5" cy="26" r="5"/><circle cx="15.5" cy="26" r="5"/><circle cx="13" cy="18" r="5"/></g><circle cx="20" cy="20" r="4" fill="var(--sun)"/></svg>
+      <div><h1>介護福祉士 毎日5問</h1><p id="today-label"></p></div>
+    </div>
+    <div class="greet" id="greet"></div>
+  </header>
+  <main id="main"></main>
+</div>
+<nav class="tabs" aria-label="画面切り替え"><div class="in" id="tabs"></div></nav>
+<canvas id="confetti" aria-hidden="true" hidden></canvas>
+<script src="questions.js"></script>
+
+<script>
+
+/* 問題データは questions.js（SUBJ と BANK_RAW）
+   選択肢の並びは問題ごとに固定の順番で入れ替え、正解の位置が偏らないようにする */
+const BANK = BANK_RAW.map(a=>{
+  const perm=shuffle([0,1,2,3,4],rng(hashStr("ch:"+a[0])));
+  return {id:a[0],subj:a[1],q:a[2],ch:perm.map(i=>a[3][i]),ans:perm.indexOf(a[4]),hint:a[5],ex:a[6]};
+});
+
+/* ---------------- 状態と保存 ---------------- */
+const LS_KEY = "kaigo5-state-v1";
+function fresh(){return {
+  st:{progress:{},days:{},settings:{examDate:""},updatedAt:0},
+};}
+let S = fresh();
+try{const raw=localStorage.getItem(LS_KEY); if(raw){const o=JSON.parse(raw); if(o&&o.st) S=Object.assign(fresh(),o);}}catch(e){}
+
+let db=null, uid=null, syncNote="";
+const refs={};
+const timers={}, chains={};
+function saveLocal(){try{localStorage.setItem(LS_KEY,JSON.stringify(S));}catch(e){}}
+function persist(part){
+  S[part].updatedAt=Date.now(); saveLocal();
+  if(!refs[part]) return;
+  clearTimeout(timers[part]);
+  timers[part]=setTimeout(()=>{
+    const body=JSON.parse(JSON.stringify(S[part]));
+    chains[part]=(chains[part]||Promise.resolve()).then(()=>refs[part].set(body)).catch(e=>{
+      syncNote = e&&e.code==="quota_exceeded" ? "保存容量がいっぱいです。" : "クラウドへの保存に失敗しました。この端末には保存されています。";
+      renderMeta();
+    });
+  },600);
+}
+
+/* ---------------- 日付・乱数 ---------------- */
+function ymd(d){const p=n=>String(n).padStart(2,"0");return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate());}
+const TODAY = ymd(new Date());
+function addDays(s,n){const [y,m,d]=s.split("-").map(Number);return ymd(new Date(y,m-1,d+n));}
+function hashStr(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;}
+function rng(seed){let a=seed;return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function shuffle(arr,r){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+/* ---------------- 問題の選び方 ---------------- */
+function allQ(){return BANK;}
+function qById(id){return allQ().find(q=>q.id===id);}
+function prog(id){return S.st.progress[id];}
+function inNote(id){const p=prog(id);return !!(p&&p.w>0&&(p.streak||0)<2);}
+function pickRound(seedKey, exclude){
+  const r=rng(hashStr(seedKey));
+  const pool=allQ().filter(q=>!exclude.has(q.id));
+  const due=pool.filter(q=>{const p=prog(q.id);return p&&p.lastWrong&&p.last<TODAY;}).sort((a,b)=>prog(a.id).last<prog(b.id).last?-1:1);
+  const unseen=shuffle(pool.filter(q=>!prog(q.id)),r);
+  const seen=shuffle(pool.filter(q=>prog(q.id)&&!due.includes(q)),r).sort((a,b)=>{
+    const pa=prog(a.id),pb=prog(b.id);const ra=pa.c/(pa.c+pa.w||1),rb=pb.c/(pb.c+pb.w||1);
+    return ra-rb || (pa.last<pb.last?-1:1);});
+  const picks=due.slice(0,2);
+  const used=new Set(picks.map(q=>q.subj));
+  for(const q of unseen){if(picks.length>=5)break;if(!used.has(q.subj)){picks.push(q);used.add(q.subj);}}
+  for(const q of unseen.concat(seen)){if(picks.length>=5)break;if(!picks.includes(q))picks.push(q);}
+  return shuffle(picks,r).map(q=>q.id);
+}
+function todayRec(){return S.st.days[TODAY];}
+function ensureToday(){
+  if(!S.st.days[TODAY]){S.st.days[TODAY]={rounds:[]};}
+  const d=S.st.days[TODAY];
+  if(!d.rounds.length){d.rounds.push({ids:pickRound(TODAY+"#0",new Set()),ans:{},hint:{}});trimDays();saveLocal();}
+  return d;
+}
+function trimDays(){const ks=Object.keys(S.st.days).sort();while(ks.length>400){delete S.st.days[ks.shift()];}}
+function roundDone(rd){return rd.ids.every(id=>rd.ans[id]);}
+function dayDone(d){return d&&d.rounds&&d.rounds.length&&roundDone(d.rounds[0]);}
+
+/* ---------------- 画面の状態 ---------------- */
+let tab="today", sel=null, roundIdx=null, flash="";
+const TABS=[["today","今日の5問"],["notes","復習ノート"],["stats","記録"],["settings","設定"]];
+
+const $=s=>document.querySelector(s);
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+
+function streak(){
+  let n=0,d=dayDone(S.st.days[TODAY])?TODAY:addDays(TODAY,-1);
+  while(dayDone(S.st.days[d])){n++;d=addDays(d,-1);}
+  return n;
+}
+function renderMeta(){
+  const [y,m,dd]=TODAY.split("-").map(Number);
+  const wd="日月火水木金土"[new Date(y,m-1,dd).getDay()];
+  let label=`${m}月${dd}日（${wd}）`;
+  const ex=S.st.settings.examDate;
+  if(ex&&ex>=TODAY){const days=Math.round((new Date(ex)-new Date(TODAY))/864e5);label+=` ・ 試験まであと${days}日`;}
+  $("#today-label").textContent=label;
+  const tot=Object.values(S.st.progress).reduce((a,p)=>a+p.c+p.w,0);
+  const sk=streak(), done=dayDone(S.st.days[TODAY]);
+  const h=new Date().getHours();
+  const hello=h<11?"おはようございます":h<17?"こんにちは":"今日もおつかれさまです";
+  let line;
+  if(done) line=pickMsg(["今日の5問はクリア！ えらい！","今日の分はおしまい。ゆっくり休んでね","コツコツ続けている自分をほめてあげてね"]);
+  else if(sk>=7) line=`${sk}日連続！ 花だんがにぎやかになってきました`;
+  else if(sk>=1) line=`${sk}日連続で続いています。今日もお花を咲かせよう`;
+  else if(tot===0) line="まずは今日の5問から。1日5分で合格に近づこう";
+  else line="5問だけなら、すぐ終わります。今日も一緒にがんばろう";
+  $("#greet").innerHTML=`${flowerSVG(44,done?"bloom":"bud")}<div class="msg"><b>${hello}</b>${esc(line)}${syncNote?`<div class="sync">${esc(syncNote)}</div>`:""}</div>
+    <div class="meta"><div><b>${sk}</b>連続日数</div><div><b>${tot}</b>解いた数</div></div>`;
+}
+function pickMsg(arr){return arr[hashStr(TODAY+arr[0])%arr.length];}
+const PRAISE=["正解！ すごい！","正解！ その調子！","正解！ よく覚えてたね","正解！ ばっちりです","正解！ 合格に一歩前進"];
+const ENCOURAGE=["おしい！ ここで覚えればもう大丈夫","まちがえた問題こそ伸びしろです","大丈夫、復習ノートでしっかり覚えよう","ここで間違えておけば本番で取れます"];
+// 花のアイコン：bloom＝完了、bud＝つぼみ、seed＝まだ
+function flowerSVG(size,state,label){
+  const t=label?` role="img" aria-label="${esc(label)}"`:' aria-hidden="true"';
+  if(state==="bloom") return `<svg width="${size}" height="${size}" viewBox="0 0 40 40"${t}><path d="M20 26v12" stroke="var(--mint)" stroke-width="2.5" stroke-linecap="round"/><path d="M20 33c-4-1-7-4-7-7 4 0 7 3 7 7z" fill="var(--mint)"/><g fill="var(--accent)"><circle cx="20" cy="9" r="6"/><circle cx="27.6" cy="14.5" r="6"/><circle cx="24.7" cy="23.5" r="6"/><circle cx="15.3" cy="23.5" r="6"/><circle cx="12.4" cy="14.5" r="6"/></g><circle cx="20" cy="17" r="4.5" fill="var(--sun)"/></svg>`;
+  if(state==="bud") return `<svg width="${size}" height="${size}" viewBox="0 0 40 40"${t}><path d="M20 22v16" stroke="var(--mint)" stroke-width="2.5" stroke-linecap="round"/><path d="M20 32c4-1 7-4 7-7-4 0-7 3-7 7z" fill="var(--mint)"/><path d="M20 8c5 3 7 8 6 12-1 3-4 4-6 4s-5-1-6-4c-1-4 1-9 6-12z" fill="var(--lilac)"/><path d="M20 12c2 3 2 7 0 11" stroke="var(--surface)" stroke-width="1.5" fill="none" opacity=".6"/></svg>`;
+  return `<svg width="${size}" height="${size}" viewBox="0 0 40 40"${t}><ellipse cx="20" cy="35" rx="10" ry="3" fill="var(--bg2)"/><path d="M20 35v-5" stroke="var(--line)" stroke-width="2.5" stroke-linecap="round"/><circle cx="20" cy="28" r="2.5" fill="var(--line)"/></svg>`;
+}
+const ICONS={
+  today:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11l3 3v13H5z"/><path d="M9 11l2 2 4-4"/><path d="M9 17h6"/></svg>',
+  notes:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2z"/><path d="M4 17a2 2 0 0 1 2-2h12"/><path d="M12 7.5c-1-1.3-3-.8-3 .8 0 1.4 3 3.2 3 3.2s3-1.8 3-3.2c0-1.6-2-2.1-3-.8z"/></svg>',
+  stats:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-7"/><circle cx="12" cy="9" r="2.2"/><path d="M12 6.8V4M14.2 9H17M9.8 9H7M13.6 7.4l1.8-1.8M10.4 7.4L8.6 5.6M13.6 10.6l1.8 1.8M10.4 10.6l-1.8 1.8"/><path d="M12 18c-2 0-4-1-5-3 2 0 4 1 5 3zM12 17c2 0 4-1 5-3-2 0-4 1-5 3z"/></svg>',
+  settings:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg>'
+};
+const HEART='<svg viewBox="0 0 24 24" class="pip-svg" aria-hidden="true"><path fill="currentColor" d="M12 21s-7.5-4.6-9.6-9.3C.9 8.2 3.1 4.5 6.7 4.5c2.1 0 3.6 1.1 5.3 3 1.7-1.9 3.2-3 5.3-3 3.6 0 5.8 3.7 4.3 7.2C19.5 16.4 12 21 12 21z"/></svg>';
+function renderTabs(){
+  const n=allQ().filter(q=>inNote(q.id)).length;
+  $("#tabs").innerHTML=TABS.map(([k,l])=>`<button data-tab="${k}" ${tab===k?'aria-current="page"':""}>${ICONS[k]}<span>${l}</span>${k==="notes"&&n?`<span class="badge">${n}</span>`:""}</button>`).join("");
+}
+function confetti(){
+  if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const c=$("#confetti");c.hidden=false;const ctx=c.getContext("2d");
+  const W=c.width=innerWidth*devicePixelRatio,H=c.height=innerHeight*devicePixelRatio;
+  const cs=getComputedStyle(document.documentElement);
+  const cols=["--accent","--lilac","--mint","--sun"].map(v=>cs.getPropertyValue(v).trim());
+  const ps=Array.from({length:90},()=>({x:W/2+(Math.random()-.5)*W*.3,y:H*.35,vx:(Math.random()-.5)*14*devicePixelRatio,vy:(-Math.random()*14-4)*devicePixelRatio,r:(4+Math.random()*5)*devicePixelRatio,c:cols[Math.floor(Math.random()*4)],a:Math.random()*6,heart:Math.random()<.35}));
+  let f=0;
+  (function tick(){
+    ctx.clearRect(0,0,W,H);
+    ps.forEach(p=>{p.vy+=.35*devicePixelRatio;p.x+=p.vx;p.y+=p.vy;p.vx*=.99;p.a+=.1;ctx.fillStyle=p.c;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.a);
+      if(p.heart){ctx.font=`${p.r*3}px sans-serif`;ctx.fillText("♥",0,0);}else{ctx.beginPath();ctx.ellipse(0,0,p.r,p.r*.6,0,0,Math.PI*2);ctx.fill();}
+      ctx.restore();});
+    if(++f<110) requestAnimationFrame(tick); else {ctx.clearRect(0,0,W,H);c.hidden=true;}
+  })();
+}
+function render(){
+  renderMeta();renderTabs();
+  const m=$("#main");
+  if(tab==="today") m.innerHTML=viewToday();
+  else if(tab==="notes") m.innerHTML=viewNotes();
+  else if(tab==="stats") m.innerHTML=viewStats();
+  else m.innerHTML=viewSettings();
+}
+
+/* ---------------- 今日の5問 ---------------- */
+function curRound(){const d=ensureToday();if(roundIdx==null||!d.rounds[roundIdx])roundIdx=d.rounds.length-1;return d.rounds[roundIdx];}
+function viewToday(){
+  const rd=curRound();
+  const idx=rd.ids.findIndex(id=>!rd.ans[id]);
+  const pips=`<div class="pips" aria-hidden="true">${rd.ids.map((id,i)=>{const a=rd.ans[id];return `<span class="pip ${a?(a.ok?"ok":"ng"):(i===idx?"cur":"")}">${HEART}</span>`;}).join("")}</div>`;
+  if(idx===-1 && !flash) return viewResult(rd,pips);
+  const showIdx = flash ? rd.ids.indexOf(flash) : idx;
+  const q=qById(rd.ids[showIdx]);
+  if(!q) return `<div class="card empty">問題が見つかりませんでした。</div>`;
+  const a=rd.ans[q.id];
+  const hintShown=!!rd.hint[q.id];
+  const label = roundIdx===0?"今日の5問":`追加練習 ${roundIdx}`;
+  let choices=q.ch.map((c,i)=>{
+    let cls="";if(a){if(i===q.ans)cls="right";else if(i===a.c)cls="wrong";}
+    return `<button class="choice ${cls}" data-act="choose" data-i="${i}" aria-pressed="${!a&&sel===i}" ${a?"disabled":""}><span class="n">${i+1}</span><span>${esc(c)}</span></button>`;
+  }).join("");
+  let foot;
+  if(!a){
+    foot=`<div class="row">
+      <button class="btn" data-act="submit" ${sel==null?"disabled":""}>解答する</button>
+      ${hintShown?"":`<button class="btn ghost" data-act="hint">ヒントを見る</button>`}
+    </div>`;
+  }else{
+    const last=rd.ids.every(id=>rd.ans[id]);
+    foot=`<div class="verdict ${a.ok?"ok bounce":"ng"} fade">
+      <strong class="v">${a.ok?esc(PRAISE[hashStr(q.id+TODAY)%PRAISE.length]):esc(ENCOURAGE[hashStr(q.id+TODAY)%ENCOURAGE.length])}</strong><div class="small" style="font-weight:700;margin-bottom:4px">正答は ${q.ans+1}</div>
+      ${esc(q.ex)}
+      ${a.ok?"":`<div class="small" style="margin-top:6px">この問題は復習ノートに追加しました。</div>`}
+    </div>
+    <div class="row"><button class="btn" data-act="next">${last?"結果を見る":"次の問題へ"}</button></div>`;
+  }
+  return `<div class="stack fade">
+    <div class="qhead"><span class="qno">${esc(label)}　<b>${showIdx+1}</b> / ${rd.ids.length}</span>${pips}</div>
+    <div class="card stack">
+      <div class="row"><span class="chip">${esc(SUBJ[q.subj]?.name||q.subj)}</span></div>
+      <div class="stem">${esc(q.q)}</div>
+      <div class="choices" role="group" aria-label="選択肢">${choices}</div>
+      ${hintShown?`<div class="hint fade"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg><div><b>ヒント</b><br>${esc(q.hint)}</div></div>`:""}
+      ${foot}
+    </div>
+  </div>`;
+}
+function viewResult(rd,pips){
+  const qs=rd.ids.map(qById).filter(Boolean);
+  const ok=qs.filter(q=>rd.ans[q.id].ok).length;
+  const wrong=qs.filter(q=>!rd.ans[q.id].ok);
+  const fb = ok===5?"全問正解！ 本当によくがんばりました。この調子で続けましょう。":ok>=3?"合格ラインの6割をクリア！ 間違えたところだけ復習すれば完璧です。":"今日の間違いは全部伸びしろです。解説を読んだら、もう覚えたも同然です。";
+  const stamp = ok===5?["たいへん","よくできました","" ]:ok>=3?["よく","できました","mint"]:["がんばり","ました","lilac"];
+  const list=qs.map(q=>{const a=rd.ans[q.id];return `<li><span class="mark ${a.ok?"ok":"ng"}">${a.ok?"○":"×"}</span><div style="min-width:0">
+    <div class="small muted">${esc(SUBJ[q.subj]?.name)}${a.h?"・ヒント使用":""}</div>
+    <div>${esc(q.q)}</div>
+    ${a.ok?"":`<div class="small" style="margin-top:4px">あなたの解答：<b>${a.c+1}</b> ${esc(q.ch[a.c])}<br>正答：<b>${q.ans+1}</b> ${esc(q.ch[q.ans])}</div>
+    <details open style="margin-top:6px"><summary>解説と分野のポイント</summary><div class="notes small" style="margin-top:6px"><p style="margin:0 0 6px">${esc(q.ex)}</p><b>${esc(SUBJ[q.subj]?.name)}の頻出ポイント</b><ul>${(SUBJ[q.subj]?.notes||[]).map(n=>`<li>${esc(n)}</li>`).join("")}</ul></div></details>`}
+  </div></li>`;}).join("");
+  return `<div class="stack fade">
+    <div class="qhead"><span class="qno">${roundIdx===0?"今日の5問":"追加練習 "+roundIdx}　結果</span>${pips}</div>
+    <div class="card stack">
+      <div class="result-top"><div class="stack" style="gap:6px;flex:1;min-width:0"><span class="chip pink" style="align-self:flex-start">今日のお花が咲きました</span><div class="score"><b>${ok}</b><span>/ ${qs.length} 問正解</span></div></div>
+        <div class="stamp pop ${stamp[2]}" aria-label="${stamp[0]+stamp[1]}">${stamp[0]}<br>${stamp[1]}</div></div>
+      <p style="margin:0">${fb}</p>
+      <ul class="reslist">${list}</ul>
+    </div>
+    <div class="row">
+      <button class="btn ghost" data-act="more">追加で5問解く</button>
+      ${wrong.length?`<button class="btn quiet" data-tab="notes">復習ノートを開く</button>`:""}
+    </div>
+  </div>`;
+}
+
+/* ---------------- 復習ノート ---------------- */
+function viewNotes(){
+  const wrong=allQ().filter(q=>inNote(q.id));
+  const mastered=allQ().filter(q=>{const p=prog(q.id);return p&&p.w>0&&(p.streak||0)>=2;}).length;
+  if(!wrong.length) return `<div class="stack fade"><h2 class="sec">復習ノート</h2>
+    <div class="card empty">${flowerSVG(56,"bloom")}まだ復習が必要な問題はありません。<br>間違えた問題は、ここに分野ごとにまとまります。<br>2回続けて正解すると「克服」としてノートから外れます。${mastered?`<br><br>これまでに克服した問題：${mastered}問`:""}</div></div>`;
+  const groups={};wrong.forEach(q=>{(groups[q.subj]=groups[q.subj]||[]).push(q);});
+  const secs=Object.keys(SUBJ).filter(k=>groups[k]).map(k=>{
+    const qs=groups[k];
+    return `<section class="card subjsec">
+      <div class="head"><h3>${esc(SUBJ[k].name)}</h3><span class="chip">${qs.length}問</span></div>
+      <details open><summary>分野の頻出ポイント</summary><div class="notes small"><ul>${SUBJ[k].notes.map(n=>`<li>${esc(n)}</li>`).join("")}</ul></div></details>
+      ${qs.map(q=>{const p=prog(q.id);return `<div class="wq">
+        <div>${esc(q.q)}</div>
+        <div class="ans small">${p.lastChoice!=null?`<span style="color:var(--ng)">前回の解答：<b>${p.lastChoice+1}</b> ${esc(q.ch[p.lastChoice])}</span>`:""}<span style="color:var(--ok)">正答：<b>${q.ans+1}</b> ${esc(q.ch[q.ans])}</span></div>
+        <div class="small muted">${esc(q.ex)}</div>
+        <div class="small muted" style="margin-top:4px">間違えた回数 ${p.w}　/　連続正解 ${p.streak||0}（あと${2-(p.streak||0)}回で克服）</div>
+      </div>`;}).join("")}
+      <div class="row"><button class="btn quiet" data-act="practice" data-subj="${k}">この分野を解き直す</button></div>
+    </section>`;}).join("");
+  return `<div class="stack fade">
+    <h2 class="sec">復習ノート</h2>
+    <p class="small muted" style="margin:0">間違えた問題を分野ごとにまとめています。2回続けて正解すると克服です。${mastered?`克服済み：${mastered}問`:""}</p>
+    ${secs}
+  </div>`;
+}
+/* ---------------- 記録 ---------------- */
+function viewStats(){
+  const ps=S.st.progress;let c=0,w=0;Object.values(ps).forEach(p=>{c+=p.c;w+=p.w;});
+  const acc=c+w?Math.round(c/(c+w)*100):0;
+  const bySubj=Object.keys(SUBJ).map(k=>{let sc=0,sw=0;allQ().filter(q=>q.subj===k).forEach(q=>{const p=ps[q.id];if(p){sc+=p.c;sw+=p.w;}});return {k,sc,sw,n:sc+sw,r:sc+sw?sc/(sc+sw):null};});
+  const bars=bySubj.map(b=>`<div class="bar"><span>${esc(SUBJ[b.k].name)}</span><div class="track"><div class="fill" style="width:${b.r==null?0:Math.round(b.r*100)}%"></div></div><span class="pct">${b.r==null?"—":Math.round(b.r*100)+"%"}</span></div>`).join("");
+  const days=[];let bloomed=0;for(let i=13;i>=0;i--){const d=addDays(TODAY,-i);const rec=S.st.days[d];const st=dayDone(rec)?"bloom":(rec&&rec.rounds.length&&Object.keys(rec.rounds[0].ans).length?"bud":"seed");if(st==="bloom")bloomed++;const [,mm,dd]=d.split("-").map(Number);days.push(`<div class="plot">${flowerSVG(40,st,`${mm}月${dd}日：${st==="bloom"?"完了":st==="bud"?"途中":"未実施"}`)}<span>${mm}/${dd}</span></div>`);}
+  return `<div class="stack fade">
+    <h2 class="sec">記録</h2>
+    <div class="kpis">
+      <div class="kpi"><b>${streak()}</b><span>連続日数</span></div>
+      <div class="kpi"><b>${c+w}</b><span>解いた問題</span></div>
+      <div class="kpi"><b>${acc}<small>%</small></b><span>正答率</span></div>
+    </div>
+    <div class="card stack"><div class="row" style="justify-content:space-between"><h3>わたしの花だん</h3><span class="chip pink">2週間で${bloomed}輪</span></div><div class="garden">${days.join("")}</div>
+      <div class="small muted">今日の5問を解き終えるとお花が咲きます。途中まではつぼみ。14輪咲かせるのが目標です。</div></div>
+    <div class="card stack"><h3>科目別の正答率</h3><div class="bars">${bars}</div>
+      <div class="small muted">本試験は科目群ごとに得点が必要です。0%や低い科目を重点的に復習しましょう。</div></div>
+  </div>`;
+}
+
+/* ---------------- 設定 ---------------- */
+function viewSettings(){
+  const s=S.st.settings;
+  const counts=Object.keys(SUBJ).map(k=>`${SUBJ[k].name} ${BANK.filter(q=>q.subj===k).length}問`).join("、");
+  return `<div class="stack fade">
+    <h2 class="sec">設定</h2>
+    <section class="card stack">
+      <h3>試験日</h3>
+      <p class="small muted" style="margin:0">入力すると、画面上部に試験までの日数が表示されます。日程は社会福祉振興・試験センターの発表で確認してください。</p>
+      <label class="f" for="exam">試験日<input type="date" id="exam" value="${esc(s.examDate)}"></label>
+    </section>
+    <section class="card stack">
+      <h3>収録問題</h3>
+      <p class="small" style="margin:0">全${BANK.length}問。すべての問題にヒントと解説が付いています。</p>
+      <p class="small muted" style="margin:0">${esc(counts)}</p>
+      <p class="small muted" style="margin:0">過去の出題傾向をもとにしたオリジナル問題です。法律や制度は改正されることがあるため、最新の情報は公式の資料でも確認してください。</p>
+    </section>
+    <p class="small muted">学習記録は${uid?"あなたのclaude.aiアカウントに保存され、ほかの端末でも引き継がれます":"この端末のブラウザに保存されています"}。</p>
+  </div>`;
+}
+
+/* ---------------- 操作 ---------------- */
+document.addEventListener("click",e=>{
+  const t=e.target.closest("[data-tab],[data-act]");if(!t)return;
+  if(t.dataset.tab){tab=t.dataset.tab;flash="";render();window.scrollTo(0,0);return;}
+  const act=t.dataset.act;const rd=tab==="today"?curRound():null;
+  if(act==="choose"){sel=Number(t.dataset.i);render();}
+  else if(act==="hint"){const id=rd.ids.find(i=>!rd.ans[i]);rd.hint[id]=true;persist("st");render();}
+  else if(act==="submit"&&sel!=null){
+    const id=rd.ids.find(i=>!rd.ans[i]);const q=qById(id);const ok=sel===q.ans;const h=!!rd.hint[id];
+    rd.ans[id]={c:sel,ok,h};
+    const p=S.st.progress[id]||(S.st.progress[id]={c:0,w:0,h:0,streak:0});
+    if(ok){p.c++;p.streak=(p.streak||0)+1;}else{p.w++;p.streak=0;p.lastChoice=sel;}
+    if(h)p.h=(p.h||0)+1;p.lastWrong=!ok;p.last=TODAY;
+    flash=id;sel=null;persist("st");render();
+  }
+  else if(act==="next"){flash="";sel=null;const fin=roundDone(rd);render();window.scrollTo(0,0);if(fin)confetti();}
+  else if(act==="more"){
+    const d=ensureToday();const used=new Set(d.rounds.flatMap(r=>r.ids));
+    let ids=pickRound(TODAY+"#"+d.rounds.length,used);
+    if(ids.length<5) ids=pickRound(TODAY+"#"+d.rounds.length,new Set());
+    d.rounds.push({ids,ans:{},hint:{}});roundIdx=d.rounds.length-1;flash="";sel=null;persist("st");render();window.scrollTo(0,0);
+  }
+  else if(act==="practice"){
+    const k=t.dataset.subj;const ids=allQ().filter(q=>q.subj===k&&inNote(q.id)).map(q=>q.id);
+    const extra=shuffle(allQ().filter(q=>q.subj===k&&!ids.includes(q.id)).map(q=>q.id),rng(Date.now()));
+    const d=ensureToday();d.rounds.push({ids:ids.concat(extra).slice(0,5),ans:{},hint:{}});
+    roundIdx=d.rounds.length-1;tab="today";flash="";sel=null;persist("st");render();window.scrollTo(0,0);
+  }
+});
+document.addEventListener("change",e=>{
+  if(e.target.id==="exam"){S.st.settings.examDate=e.target.value;persist("st");renderMeta();}
+  if(e.target.id==="time"){S.st.settings.time=e.target.value;persist("st");}
+});
+
+/* ---------------- 起動 ---------------- */
+if(location.hash){const h=location.hash.slice(1);if(TABS.some(x=>x[0]===h))tab=h;}
+ensureToday();
+render();
+(async()=>{
+  if(!window.claude||!window.claude.use) return;
+  try{
+    const [d,u]=await Promise.all([window.claude.use("db"),window.claude.use("user")]);
+    if(!d||!u) return;
+    const id=await u.id(); if(!id) return;
+    db=d;uid=id;
+    const col=db.collection("data/users/"+uid);
+    refs.st=col.doc("state");
+    let changed=false;
+    for(const part of ["st"]){
+      const snap=await refs[part].get();
+      const remote=snap.exists?snap.data():null;
+      if(remote&&(remote.updatedAt||0)>(S[part].updatedAt||0)){S[part]=JSON.parse(JSON.stringify(remote));changed=true;}
+      else if(S[part].updatedAt>0&&(!remote||(remote.updatedAt||0)<S[part].updatedAt)){persist(part);}
+    }
+    if(changed){saveLocal();roundIdx=null;flash="";ensureToday();}
+    render();
+  }catch(e){syncNote="クラウドの記録を読み込めませんでした。この端末の記録を使っています。";render();}
+})();
+</script>
+</body>
+</html>
